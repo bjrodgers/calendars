@@ -1,0 +1,20 @@
+.year-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: auto;
+  max-width: fit-content;
+}
+
+.year {
+  margin: auto;
+  max-width: fit-content;
+}
+
+.year-month {
+  border-radius: 1rem 1rem 0 0;
+  padding: .30rem;
+}
+
+.year-month .month{
+  margin: auto;
+}
