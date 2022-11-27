@@ -1,3 +1,7 @@
+html {
+  min-width: 1024px;
+}
+
 body {
   margin: 0;
   /*font-family: "Times New Roman", Times, serif;*/
