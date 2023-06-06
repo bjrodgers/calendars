@@ -1,7 +1,7 @@
-import {AppBar, IconButton, MenuItem, Select, Stack, Switch, Toolbar, Typography} from "@mui/material";
-import {DisplayOption, months, selectStyles} from "./constants";
-import {useState} from "react";
 import PrintIcon from '@mui/icons-material/Print';
+import {AppBar, Button, IconButton, MenuItem, Select, Stack, Switch, Toolbar, Typography} from "@mui/material";
+import {useState} from "react";
+import {DisplayOption, months, selectStyles} from "./constants";
 
 /**
  * TitleBar component
@@ -16,10 +16,29 @@ export function TitleBar({
                          }) {
 
   const [disableMonth, setDisableMonth] = useState(defaultDisplay === DisplayOption.Year);
+  const [year, setYear] = useState(defaultYear);
+  const [month, setMonth] = useState(defaultMonth);
 
   /// Handle print button click
   function _onPrintClick(_) {
     window.print();
+  }
+
+  /// Handle click on 'Now' button
+  function _onNowClick() {
+    const today = new Date();
+    _onMonthChange(today.getMonth() +1);
+    _onYearChange(today.getFullYear())
+  }
+
+  function _onMonthChange(m) {
+    setMonth(m);
+    onMonthChange(m)
+  }
+
+  function _onYearChange(y) {
+    setYear(y);
+    onYearChange(y);
   }
 
   /// Handle display type switch
@@ -54,13 +73,12 @@ export function TitleBar({
     });
 
     return (
-      <Select
-        defaultValue={defaultYear}
-        label='Year'
-        onChange={(e) => onYearChange(e.target.value)}
-        size='small'
-        sx={selectStyles}
-      >{options}
+      <Select value={year}
+              label='Year'
+              onChange={(e) => _onYearChange(e.target.value)}
+              size='small'
+              sx={selectStyles}>
+        {options}
       </Select>
     )
   }
@@ -72,15 +90,24 @@ export function TitleBar({
     });
 
     return (
-      <Select
-        defaultValue={defaultMonth}
-        disabled={disableMonth}
-        label='Month'
-        onChange={(e) => onMonthChange(e.target.value)}
-        size='small'
-        sx={selectStyles}
-      >{options}
+      <Select disabled={disableMonth}
+              label='Month'
+              onChange={(e) => _onMonthChange(e.target.value)}
+              size='small'
+              sx={selectStyles}
+              value={month}>
+        {options}
       </Select>
+    )
+  }
+
+  function _renderNowButton() {
+    return (
+      <Button onClick={_onNowClick}
+              sx={{borderRadius: '1rem'}}
+              variant='contained'>
+        Goto Now
+      </Button>
     )
   }
 
@@ -103,6 +130,7 @@ export function TitleBar({
             <Typography variant="h6" component="div">
               Printable Calendar
             </Typography>
+            {_renderNowButton()}
             {_renderMonthSwitcher()}
             {_renderYearSwitcher()}
             {_renderMonthYearSwitch()}
