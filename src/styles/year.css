@@ -1,20 +1,62 @@
 .year-title {
   font-size: 3rem;
-  font-weight: bold;
-  margin: auto;
-  max-width: fit-content;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  text-align: center;
 }
 
-.year {
-  margin: auto;
-  max-width: fit-content;
+.year-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  justify-items: center;
+  margin: 0 auto;
+  /* At most 4 columns */
+  max-width: calc(4 * 18rem + 3 * 1rem);
 }
 
-.year-month {
-  border-radius: 1rem 1rem 0 0;
-  padding: .30rem;
+.year-grid .month {
+  width: 18rem;
 }
 
-.year-month .month{
-  margin: auto;
+@media (max-width: 340px) {
+  .year-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .year-grid .month {
+    width: 100%;
+  }
+}
+
+/* Print: 4 × 3 grid filling a landscape page. */
+@media print {
+  .year-title {
+    font-size: 26pt;
+    line-height: 1;
+    margin: 0 0 0.2in;
+  }
+
+  .year-grid {
+    gap: 0.2in;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: none;
+  }
+
+  .year-grid .month {
+    width: 100%;
+    font-size: 9pt;
+  }
+
+  .year-grid .month-title {
+    height: 0.27in;
+    padding: 0;
+  }
+
+  .year-grid .day-name,
+  .year-grid .day {
+    /* 3 × (0.27 + 7 × 0.26) + gaps + title ≈ 7.2in: fits Letter and A4 landscape */
+    height: 0.26in;
+    width: auto;
+  }
 }
