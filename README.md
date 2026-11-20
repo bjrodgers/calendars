@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Printable Calendar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A small React app for printing clean month and year calendars. Live at
+<https://brandonjrodgers.com/calendars>.
 
-## Available Scripts
+The toolbar is screen-only; it never appears on paper.
 
-In the project directory, you can run:
+## Using it
 
-### `npm start`
+- **Month / Year** switches between one large month and a 4 × 3 year grid.
+- **‹ ›** step by a month (month view) or a year (year view). **Today** jumps to now.
+- **Print** prints the current view. **Print each month** prints all 12 months of
+  the selected year, one month per page.
+- Both views are sized for a landscape page (US Letter or A4). Weeks start on
+  Sunday, and month view always shows 6 week rows so every month prints at the
+  same size.
+- Settings are remembered in the browser and kept in the URL, so a link like
+  `?view=month&y=2027&m=3` opens that exact calendar.
+- Month and weekday names follow the browser's language.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Development
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Built with [Vite](https://vite.dev) and tested with [Vitest](https://vitest.dev).
 
-### `npm test`
+```bash
+npm install
+npm start        # dev server at http://localhost:3000/calendars/
+npm test         # tests in watch mode (npx vitest run for a single run)
+npm run build    # production build into build/
+npm run preview  # serve the production build locally
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The app is built for the `/calendars/` path; change `base` in
+`vite.config.js` to host it somewhere else.
 
-### `npm run build`
+## Layout
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `src/app/calendar.js` – date math (days in month, the 6-week grid, names)
+- `src/app/settings.js` – reading and saving settings (URL and localStorage)
+- `src/app/app.jsx` – app state and printing
+- `src/app/title_bar.jsx` – the toolbar
+- `src/app/month.jsx`, `src/app/year.jsx` – the calendar views
+- `src/styles/` – screen and print styles

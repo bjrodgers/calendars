@@ -1,45 +1,118 @@
-.bold {
-    font-weight: bold;
+.month {
+  background: var(--paper);
+  border-collapse: collapse;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+  table-layout: fixed;
+  break-inside: avoid;
 }
 
-.month {
-    background-color: white;
-    border-collapse: collapse;
-    border: 1px solid #aaaaaa;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+.month-title {
+  background: var(--header-fill);
+  border-bottom: 1px solid var(--line);
+  font-weight: 700;
+  padding: 0.25rem 0;
+  text-align: center;
 }
+
+.day-name {
+  font-weight: 700;
+  padding: 0.15rem 0;
+  text-align: center;
+}
+
+.day {
+  height: 2rem;
+  width: 2.5rem;
+  padding: 0;
+  text-align: center;
+}
+
+/* Today is highlighted on screen only. */
+.today {
+  background: var(--today);
+  font-weight: 700;
+}
+
+/* Large (single month) */
 
 .month-large {
-    width: 90%;
-    margin: 1rem auto;
+  width: min(100%, 72rem);
+  margin: 0 auto;
 }
 
-.title {
-    background-color: #dfdfdf;
-    border-bottom: 1px solid #aaaaaa;
-    font-weight: bold;
-    text-align: center;
-    padding: .25rem 0;
+.month-large .month-title {
+  border: none;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  height: 5rem;
 }
 
-.title-large {
-    border: none;
-    font-size: 3rem;
-    height: 5rem;
+.month-large .day-name {
+  border: 1px solid var(--line);
+  border-top: none;
 }
 
-.cell {
+.month-large .day {
+  border: 1px solid var(--line);
+  height: clamp(4rem, 12vw, 7rem);
+  width: auto;
+  padding: 0.25rem 0.35rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.day-name .short {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .month-large .day-name .long {
+    display: none;
+  }
+
+  .month-large .day-name .short {
+    display: inline;
+  }
+}
+
+/* ---------- Print sizes, in inches so a month fills one landscape page ---------- */
+
+@media print {
+  .month {
+    box-shadow: none;
+  }
+
+  .today {
+    background: none;
+    font-weight: inherit;
+  }
+
+  .month-large {
+    width: 100%;
+  }
+
+  .month-large .month-title {
+    font-size: 30pt;
+    height: 0.6in;
     padding: 0;
-    text-align: center;
-    height: 2rem;
-    width: 2.5rem;
-}
+  }
 
-.cell-large {
-    border: 1px solid #aaaaaa;
-    padding-left: .2rem;
-    text-align: left;
-    vertical-align: top;
-    height: 7rem;
-    width: 7rem;
+  .month-large .day-name {
+    font-size: 11pt;
+    height: 0.3in;
+  }
+
+  .month-large .day-name .long {
+    display: inline;
+  }
+
+  .month-large .day-name .short {
+    display: none;
+  }
+
+  .month-large .day {
+    font-size: 12pt;
+    /* 0.6 + 0.3 + 6 × 1.05 = 7.2in, which fits Letter and A4 landscape with 0.4in margins */
+    height: 1.05in;
+  }
 }

@@ -1,0 +1,68 @@
+:root {
+  --ink: #1f2328;
+  --muted: #59636e;
+  --line: #9aa1a8;
+  --header-fill: #e4e6e8;
+  --paper: #ffffff;
+  --canvas: #f3f4f6;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --today: #fff1b8;
+  --bar: #1d3557;
+  --bar-ink: #ffffff;
+  --bar-control: rgba(255, 255, 255, 0.12);
+  --bar-control-hover: rgba(255, 255, 255, 0.22);
+  --bar-border: rgba(255, 255, 255, 0.45);
+  --radius: 6px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  padding: 1.5rem 16px 3rem;
+}
+
+/* ---------- Print ---------- */
+
+/* Both views are laid out for a landscape page. */
+@page {
+  size: landscape;
+  margin: 0.4in;
+}
+
+@media print {
+  html, body {
+    background: var(--paper);
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .title-bar {
+    display: none !important;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .print-page {
+    break-after: page;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+  }
+}
