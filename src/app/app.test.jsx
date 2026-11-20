@@ -42,6 +42,19 @@ describe('App', () => {
     expect(screen.getByRole('button', {name: 'Print'})).toBeInTheDocument();
   });
 
+  it('shows holiday names in month view', () => {
+    setup(); // November 2026
+    const cell = screen.getByText('Thanksgiving').closest('td');
+    expect(cell).toHaveTextContent(/^26Thanksgiving$/);
+    expect(screen.getByText('Veterans Day')).toBeInTheDocument();
+  });
+
+  it('marks holidays with a tooltip in year view', () => {
+    setup({view: View.Year});
+    expect(screen.queryByText('Thanksgiving')).toBeNull();
+    expect(screen.getAllByTitle('Thanksgiving')).toHaveLength(1);
+  });
+
   it('starts weeks on Sunday', () => {
     setup();
     const headers = within(screen.getByRole('table')).getAllByRole('columnheader');

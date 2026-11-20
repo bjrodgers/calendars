@@ -16,6 +16,9 @@ The toolbar is screen-only; it never appears on paper.
   same size.
 - Settings are remembered in the browser and kept in the URL, so a link like
   `?view=month&y=2027&m=3` opens that exact calendar.
+- Common US holidays (federal holidays plus days like Easter, Mother's Day and
+  Halloween) show in small text in month view. In year view the date is bold,
+  with the name on hover. The list is in `src/app/holidays.js`.
 - Month and weekday names follow the browser's language.
 
 ## Development

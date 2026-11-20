@@ -1,4 +1,5 @@
 import {monthGrid, monthNames, toWeeks, weekdayNames} from './calendar';
+import {holidaysForMonth} from './holidays';
 import '../styles/month.css';
 
 /** One month as a table. `month` is 0-11. Always renders 6 week rows. */
@@ -8,6 +9,28 @@ export default function Month({year, month, large = false, locale, today}) {
   const shortNames = weekdayNames(locale, 'short');
   const title = monthNames(locale)[month] + (large ? ` ${year}` : '');
   const isThisMonth = today && today.getFullYear() === year && today.getMonth() === month;
+  const holidays = holidaysForMonth(year, month);
+
+  // Large months show holiday names under the date; small (year view) months mark the date
+  // and give the name as a tooltip, since there's no room for text.
+  function renderDay(day) {
+    if (day === null) return '';
+    const names = holidays.get(day);
+    if (!large || !names) return day;
+    return (
+      <>
+        <span className='day-number'>{day}</span>
+        {names.map((name) => <span key={name} className='holiday-name'>{name}</span>)}
+      </>
+    );
+  }
+
+  function dayClass(day) {
+    const classes = ['day'];
+    if (holidays.has(day)) classes.push('holiday');
+    if (isThisMonth && day === today.getDate()) classes.push('today');
+    return classes.join(' ');
+  }
 
   return (
     <table className={large ? 'month month-large' : 'month'}>
@@ -30,9 +53,10 @@ export default function Month({year, month, large = false, locale, today}) {
           <tr key={w}>
             {week.map((day, d) => (
               <td key={d}
-                  className={isThisMonth && day === today.getDate() ? 'day today' : 'day'}
+                  className={dayClass(day)}
+                  title={!large && holidays.has(day) ? holidays.get(day).join(', ') : undefined}
                   aria-current={isThisMonth && day === today.getDate() ? 'date' : undefined}>
-                {day ?? ''}
+                {renderDay(day)}
               </td>
             ))}
           </tr>
